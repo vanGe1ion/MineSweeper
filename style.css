@@ -1,0 +1,142 @@
+.main{
+    width: 100%;
+}
+
+
+.flex{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.field{
+    display: flex;
+    flex-direction: column;
+}
+
+.score{
+    border: 3px solid black;
+    margin: 5px 20px;
+    padding: 7px;
+    font-size: 20px;
+}
+
+.board{
+    border: 3px solid black;
+    margin: 5px 20px;
+    display: none;
+    padding: 7px;
+    flex-direction: column;
+    background-color: #e6e6e6;
+}
+
+
+.control{
+    margin: 20px;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+
+.difficulty h3{
+    margin-top: -5px;
+}
+
+.custom div input{
+    width: 40px;
+}
+
+.custom div{
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    margin: 1px 0
+}
+
+.custom{
+    display: none;
+}
+
+
+.start button{
+    width: 150px;
+    font-size: larger;
+    padding: 7px;
+}
+
+.row{
+    display: flex;
+}
+
+
+.cell{
+    width: 20px;
+    height: 20px;
+    border: 1px solid #848484;
+    background: radial-gradient(closest-corner at 10px 10px, #ffffff, #a2a2a2);
+    text-align: center;
+    cursor: default;
+}
+
+.digit{
+    font-family: "Arial Black";
+    font-weight: 900;
+    font-size: smaller;
+}
+
+.n-bg{
+    background: none;
+}
+
+.one{
+    color: blue;
+}
+
+.two{
+    color: limegreen;
+}
+
+.three{
+    color: red;
+}
+
+.four{
+    color: darkblue;
+}
+
+.five{
+    color: darkred;
+}
+
+.six{
+    color: darkcyan;
+}
+
+.seven{
+    color: black;
+}
+
+.eight{
+    color: gray;
+}
+
+.mine:after{
+    content:'\2731';
+}
+
+.flag:after{
+    content:'\2757';
+}
+
+.question:after{
+    content:'\2754';
+}
+
+.miss:after{
+    content:'\274C'
+}
+
+.boom{
+    background: red;
+}
