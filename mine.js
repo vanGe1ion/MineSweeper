@@ -1,5 +1,8 @@
 let gParams = {};
 let field = [];
+let audio = new Audio();
+let img = document.querySelectorAll('img')[0];
+img.addEventListener('click', HideMedia);
 
 const DIFFICULTY = {
     EASY:0,
@@ -60,6 +63,7 @@ function CreateField() {
     }
 }
 
+
 function FillFieldRandom() {
     for(let i = 0; i < gParams.mines; ++i){
         let mine = {
@@ -93,6 +97,7 @@ function SetSatelliteMineCount(coord){
 
     return mines;
 }
+
 
 function DrawField() {
     let score = document.getElementsByClassName('mcount')[0];
@@ -137,6 +142,7 @@ function RightClickHandler(event){
     VictoryCheck();
 }
 
+
 function ClickHandler(event){
     let cell = event.target;
     let coord = {
@@ -174,6 +180,7 @@ function EndGame(){
         cell.removeEventListener('click', ClickHandler);
     }
 }
+
 
 function GameOver(){
     EndGame();
@@ -258,6 +265,7 @@ radios.forEach(radio => {
     radio.addEventListener('change', RadioHandler);
 });
 
+
 function RadioHandler(event){
     let radio = event.target;
     let customPanel = document.getElementsByClassName('custom')[0];
@@ -272,6 +280,8 @@ const startButton = document.getElementById('bStart');
 startButton.addEventListener("click", StartHandler);
 
 function StartHandler(){
+	HideMedia();
+	
     let difficulty = +document.querySelector('input[type="radio"]:checked').value;
     SetDifficulty(difficulty);
     CreateField();
@@ -280,11 +290,30 @@ function StartHandler(){
 }
 
 
-function GetMedia(state){
-	let audio = new Audio('media/vol/' + (state ? 'succ' : 'fail') + '/0.mp3');
-	audio.play();
+function HideMedia(){
+	audio.pause();
+	if(!img.className.includes('d-none'))
+		img.className += 'd-none';
 }
 
+
+function GetMedia(state){
+	audio = new Audio('media/vol/' + (state ? 'succ' : 'fail') + '/' + (GetRnd(0, 5)) + '.mp3');
+	audio.play();
+	
+	img.src = 'media/pic/' + (state ? 'succ' : 'fail') + '/' + (GetRnd(0, 7)) + '.jpg';
+	setTimeout(()=>{
+		img.style.marginLeft = -img.width/2+'px';
+		img.style.marginTop = -img.height/2+'px';
+		img.className = img.className.replace('d-none', '');
+	}, 50);
+
+}
+
+
+function GetRnd(min, max){
+	return Math.floor(Math.random() * (max - min)) + min
+}
 
 
 

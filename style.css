@@ -140,3 +140,16 @@
 .boom{
     background: red;
 }
+
+.d-none{
+	display:none;
+}
+
+img{
+display: block;
+position: fixed;
+top: 50%;
+left: 50%;
+
+
+}
