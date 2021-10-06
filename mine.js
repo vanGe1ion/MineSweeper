@@ -167,12 +167,16 @@ function ClickHandler(event){
 }
 
 
-function GameOver(){
-    let cells = document.getElementsByClassName('cell');
+function EndGame(){
+	let cells = document.getElementsByClassName('cell');
     for(let cell of cells){
         cell.removeEventListener('contextmenu', RightClickHandler);
         cell.removeEventListener('click', ClickHandler);
     }
+}
+
+function GameOver(){
+    EndGame();
 
     for(let i = 0; i < gParams.height; ++i){
         for(let j = 0; j < gParams.width; ++j)
@@ -190,9 +194,16 @@ function GameOver(){
             y:+flag.dataset.coord.split(';')[1]
         };
         if(field[coord.x][coord.y] !== -1)
-            flag.className = flag.className.replace('flag', 'miss')
+            flag.className = flag.className += ' miss';
     }
+	
+	GetMedia(false);
+}
 
+
+function Victory(){
+	EndGame();
+	GetMedia(true);
 }
 
 
@@ -213,7 +224,7 @@ function VictoryCheck() {
         let freeFieldsTarget = gParams.width * gParams.height - gParams.mines;
         let freFeeldsCurrent = document.getElementsByClassName('n-bg').length;
         if (shoots === gParams.mines && freeFieldsTarget === freFeeldsCurrent)
-            alert('Fanfare!');
+            Victory();
     }
 }
 
@@ -267,5 +278,16 @@ function StartHandler(){
     FillFieldRandom();
     DrawField();
 }
+
+
+function GetMedia(state){
+	let audio = new Audio('media/vol/' + (state ? 'succ' : 'fail') + '/0.mp3');
+	audio.play();
+}
+
+
+
+
+
 
 
