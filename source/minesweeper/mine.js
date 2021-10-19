@@ -1,8 +1,21 @@
 let gParams = {};
 let field = [];
-let audio = new Audio();
+
+
+let startSound = new Audio('media/vol/start.mp3');
+let ambient = new Audio('media/vol/ambient.mp3');
+let endSound = new Audio();
+
+startSound.addEventListener('ended', ()=>{
+	ambient.currentTime = 0;
+	ambient.play()
+});
+ambient.addEventListener('ended', ()=>ambient.play());
+
+
 let img = document.querySelectorAll('img')[0];
 img.addEventListener('click', HideMedia);
+
 
 const DIFFICULTY = {
     EASY:0,
@@ -20,20 +33,20 @@ function GetGameParams(difficulty) {
             width: 9,
             mines: 10
         };
-        case 1:
-            return {
-                height: 16,
-                width: 16,
-                mines: 40
-            };
-        case 2:
-            return {
-                height: 16,
-                width: 30,
-                mines: 99
-            };
-        case 3:
-            return GetFieldParam();
+	case 1:
+		return {
+			height: 16,
+			width: 16,
+			mines: 40
+		};
+	case 2:
+		return {
+			height: 16,
+			width: 30,
+			mines: 99
+		};
+	case 3:
+		return GetFieldParam();
     }
 }
 
@@ -179,6 +192,9 @@ function EndGame(){
         cell.removeEventListener('contextmenu', RightClickHandler);
         cell.removeEventListener('click', ClickHandler);
     }
+	
+	startSound.pause();
+	ambient.pause();
 }
 
 
@@ -281,6 +297,8 @@ startButton.addEventListener("click", StartHandler);
 
 function StartHandler(){
 	HideMedia();
+	startSound.currentTime = 0;
+	startSound.play();
 	
     let difficulty = +document.querySelector('input[type="radio"]:checked').value;
     SetDifficulty(difficulty);
@@ -291,15 +309,15 @@ function StartHandler(){
 
 
 function HideMedia(){
-	audio.pause();
+	endSound.pause();
 	if(!img.className.includes('d-none'))
 		img.className += 'd-none';
 }
 
 
 function GetMedia(state){
-	audio = new Audio('media/vol/' + (state ? 'succ' : 'fail') + '/' + (GetRnd(0, 5)) + '.mp3');
-	audio.play();
+	endSound = new Audio('media/vol/' + (state ? 'succ' : 'fail') + '/' + (GetRnd(0, 5)) + '.mp3');
+	endSound.play();
 	
 	img.src = 'media/pic/' + (state ? 'succ' : 'fail') + '/' + (GetRnd(0, 7)) + '.jpg';
 	setTimeout(()=>{
